@@ -14,8 +14,6 @@ const Home = () => {
 
   const roomInputRef = useRef(null);
 
-  navi
-
   const signUserOut = async () => {
     await signOut(auth);
     cookies.remove("auth-token");
