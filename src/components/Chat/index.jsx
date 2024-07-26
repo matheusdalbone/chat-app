@@ -36,7 +36,6 @@ const Chat = (props) => {
         messages.push({ ...doc.data(), id: doc.id });
       })
       setMessages(messages);
-      console.log(messages);
     });
 
     return () => unsuscribe();
