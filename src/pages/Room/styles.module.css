@@ -1,0 +1,72 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #333;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  margin-top: 76px;
+  margin-left: 12px;
+  gap: 20px;
+  height: 90vh;
+}
+
+.screenSection {
+  width: 80vw;
+  background-color: #555;
+}
+
+.chatSection {
+  width: 20vw;
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    margin-left: 0;
+    margin-top: 76px;
+    gap: 10px;
+  }
+
+  .screenSection {
+    width: 94vw;
+    height: 300px;
+  }
+
+  .chatSection {
+    width: 94vw;
+    height: 100%;
+  }
+}
+
+/* Media query para telas menores que 480px */
+@media screen and (max-width: 480px) {
+  .header {
+    padding: 0.5rem;
+  }
+
+  .main {
+    gap: 5px;
+  }
+
+  .screenSection{
+    width: 100%;
+    height: 28vh;
+  }
+
+  .chatSection {
+    width: 100%;
+    height: calc(100% - 28vh);
+  }
+}

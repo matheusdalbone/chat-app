@@ -1,0 +1,28 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: calc(100% - 3.125rem);
+}
+
+.chatMessages {
+  overflow-y: scroll;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.messageInput {
+  width: calc(100% - 2.9463rem);
+  height: 2.75rem;
+}
+
+@media (max-width: 600px) {
+  .chat {
+    height: calc(100% - 3.125rem);
+  }
+}

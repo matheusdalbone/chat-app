@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import Auth from "../../components/Auth";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Chat from "../../components/Chat";
 import { signOut } from "firebase/auth";
 //Cookies
@@ -11,6 +11,8 @@ const cookies = new Cookies();
 const Home = () => {
   const[isAuth, setIsAuth] = useState(cookies.get("auth-token"));
   const[room, setRoom] = useState(null);
+
+  const navigate = useNavigate();
 
   const roomInputRef = useRef(null);
 
@@ -23,7 +25,7 @@ const Home = () => {
 
   if(isAuth) {
     return (
-      <> {room ? <Chat room={room}/> : <div>
+      <> {room ? navigate(`/room/${room}`) : <div>
       <label>
         Enter Room Name:
       </label>

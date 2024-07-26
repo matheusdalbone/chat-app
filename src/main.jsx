@@ -5,5 +5,7 @@ import Routes from './utils/Router';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
     <RouterProvider router={Routes} />
+    </React.StrictMode>,
 )

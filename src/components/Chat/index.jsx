@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import styles from './styles.module.css';
 import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp, where } from 'firebase/firestore';
 import { auth, db } from '../../configs/firebase-config';
 
@@ -8,9 +9,11 @@ const Chat = (props) => {
   const[newMessage, setNewMessage] = useState("");
   const messagesRef = collection(db, "messages");
   const[messages, setMessages] = useState([]);
+  const lastMessagesRef = useRef(null);
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if(newMessage === "")
+    if(newMessage === "" || newMessage.trim().length === 0)
       return;
 
     await addDoc(messagesRef, {
@@ -39,26 +42,36 @@ const Chat = (props) => {
     });
 
     return () => unsuscribe();
-  }, []);
+  }, [room]);
 
   return (
-    <div>
-      <div>{messages.map((message) => (
-        <div key={message.id}>
-          <span>{message.user}: </span>
-          <span>{message.text}</span>
+    <>
+        <div className={styles.chat}>
+          <div className={styles.chatMessages}>
+            {messages.map((message) => (
+              <div key={message.id}>
+                <span>{message.user}: </span>
+                <span>{message.text}</span>
+              </div>
+            ))}
+          </div>
+
+          <div ref={lastMessagesRef}></div>
         </div>
-        ))}</div>
-      <form onSubmit={handleFormSubmit}>
-        <input
-          type="text" placeholder='Enter Message'
-          onChange={(e) => setNewMessage(e.target.value)}
-          value={newMessage}
-        />
-        <button type="submit">Send</button>
-      </form>
-    </div>
-  )
+        <form onSubmit={handleFormSubmit} className={styles.formSection}>
+          <input
+            type="text"
+            placeholder="Enter Message"
+            onChange={(e) => setNewMessage(e.target.value)}
+            value={newMessage}
+            className={styles.messageInput}
+          />
+          <button type="submit" className={styles.messageButton}>
+            Send
+          </button>
+        </form>
+    </>
+  );
 };
 
 export default Chat;
