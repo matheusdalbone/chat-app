@@ -24,6 +24,8 @@ const Chat = (props) => {
     });
 
     setNewMessage("");
+
+    lastMessagesRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -48,15 +50,16 @@ const Chat = (props) => {
     <>
         <div className={styles.chat}>
           <div className={styles.chatMessages}>
-            {messages.map((message) => (
+            {
+            messages.map((message) => (
               <div key={message.id}>
                 <span>{message.user}: </span>
                 <span>{message.text}</span>
               </div>
-            ))}
+            ))
+          }
+            <div ref={lastMessagesRef} className={styles.teste} />
           </div>
-
-          <div ref={lastMessagesRef}></div>
         </div>
         <form onSubmit={handleFormSubmit} className={styles.formSection}>
           <input

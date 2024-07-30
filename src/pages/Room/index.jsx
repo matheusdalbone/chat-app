@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Chat from "../../components/Chat";
+import Screen from "../../components/Screen";
 import styles from "./styles.module.css";
 
 const Room = () => {
@@ -8,6 +9,15 @@ const Room = () => {
   const { roomID } = useParams();
 
   const navigate = useNavigate();
+
+  const shareScreen = () => {
+    navigator.mediaDevices.getDisplayMedia({video: true, audio: true}).then(stream => {
+      const video = document.querySelector("video");
+      video.srcObject = stream;
+      video.onloadedmetadata = () => video.play();
+      console.log(stream);
+    })
+  }
 
   useEffect(() => {
     setRoom(roomID);
@@ -22,9 +32,7 @@ const Room = () => {
       </div>
 
       <div className={styles.main}>
-        <div className={styles.screenSection}>
-          TELA
-        </div>
+        <Screen shareScreen={() => shareScreen()}/>
         <div className={styles.chatSection}>
           <Chat room={room} />
         </div>
