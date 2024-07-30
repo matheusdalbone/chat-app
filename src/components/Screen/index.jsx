@@ -8,8 +8,6 @@ const Screen = (props) => {
   let localStream = null;
   let remoteStream = new MediaStream();
 
-  const [callId, setCallId] = useState("");
-
   const servers = {
     iceServers: [
       {
@@ -27,11 +25,21 @@ const Screen = (props) => {
 
   useEffect(() => {
     const setupRemoteStream = () => {
-      const video = document.querySelector("#remoteVideo");
+      const video = document.querySelector("#screenVideo");
       video.srcObject = remoteStream;
     };
 
     setupRemoteStream();
+
+    const callDoc = doc(db, "calls", "currentCall");
+    const unsubscribe = onSnapshot(callDoc, async (snapshot) => {
+      const data = snapshot.data();
+      if (data && !peerConnection) {
+        await answerCall("currentCall");
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const shareScreen = async () => {
@@ -40,7 +48,7 @@ const Screen = (props) => {
         video: true,
         audio: true,
       });
-      const video = document.querySelector("#localVideo");
+      const video = document.querySelector("#screenVideo");
       video.srcObject = localStream;
       video.onloadedmetadata = () => video.play();
       createOffer();
@@ -64,7 +72,7 @@ const Screen = (props) => {
 
     peerConnection.onicecandidate = async (event) => {
       if (event.candidate) {
-        const docRef = doc(db, "calls", callId);
+        const docRef = doc(db, "calls", "currentCall");
         const candidatesCollection = collection(docRef, "offerCandidates");
         await setDoc(doc(candidatesCollection), event.candidate.toJSON());
       }
@@ -73,8 +81,7 @@ const Screen = (props) => {
     let offer = await peerConnection.createOffer();
     await peerConnection.setLocalDescription(offer);
 
-    const callDoc = doc(collection(db, "calls"));
-    setCallId(callDoc.id);
+    const callDoc = doc(db, "calls", "currentCall");
 
     await setDoc(callDoc, { offer: { type: offer.type, sdp: offer.sdp } });
 
@@ -104,8 +111,8 @@ const Screen = (props) => {
     peerConnection = new RTCPeerConnection(servers);
     remoteStream = new MediaStream();
 
-    const localVideo = document.querySelector("#localVideo");
-    localVideo.srcObject = remoteStream;
+    const screenVideo = document.querySelector("#screenVideo");
+    screenVideo.srcObject = remoteStream;
 
     peerConnection.ontrack = (event) => {
       event.streams[0].getTracks().forEach((track) => {
@@ -151,12 +158,9 @@ const Screen = (props) => {
 
   return (
     <div className={styles.container}>
-      <video id="localVideo" autoPlay className={styles.screen} />
-      <video id="remoteVideo" autoPlay className={styles.screen} />
+      <video id="screenVideo" autoPlay className={styles.screen} />
       <div>
         <button onClick={() => shareScreen()}>Share Screen</button>
-        <input type="text" value={callId} onChange={(e) => setCallId(e.target.value)} />
-        <button onClick={() => answerCall(callId)}>Answer Call</button>
       </div>
     </div>
   );
