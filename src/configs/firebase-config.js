@@ -1,10 +1,12 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCyqN-kRq7KmU-UnUWjjLaiPRnLFDQRtC0",
   authDomain: "chat-app-5b7ff.firebaseapp.com",
+  databaseURL: "https://chat-app-5b7ff-default-rtdb.firebaseio.com",
   projectId: "chat-app-5b7ff",
   storageBucket: "chat-app-5b7ff.appspot.com",
   messagingSenderId: "644785795220",
@@ -16,3 +18,4 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
 export const db = getFirestore(app);
+export const dbRef = getDatabase(app);

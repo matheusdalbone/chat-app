@@ -10,15 +10,6 @@ const Room = () => {
 
   const navigate = useNavigate();
 
-  const shareScreen = () => {
-    navigator.mediaDevices.getDisplayMedia({video: true, audio: true}).then(stream => {
-      const video = document.querySelector("video");
-      video.srcObject = stream;
-      video.onloadedmetadata = () => video.play();
-      console.log(stream);
-    })
-  }
-
   useEffect(() => {
     setRoom(roomID);
   }, [])
@@ -32,7 +23,7 @@ const Room = () => {
       </div>
 
       <div className={styles.main}>
-        <Screen shareScreen={() => shareScreen()}/>
+        <Screen />
         <div className={styles.chatSection}>
           <Chat room={room} />
         </div>
