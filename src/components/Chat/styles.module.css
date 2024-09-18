@@ -2,12 +2,17 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  width: 100%;
+  width: 97%;
   height: calc(100% - 3.125rem);
+  background-color: #144272;
+  color: aliceblue;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
 .chatMessages {
   overflow-y: scroll;
+  margin-left: 12px;
 }
 
 .formSection {
@@ -17,10 +22,33 @@
 }
 
 .messageInput {
-  width: calc(100% - 2.9463rem);
+  width: calc(100% -  4rem);
   height: 2.75rem;
+  border-bottom-left-radius: 12px;
+  border: none;
+  color: black;
+  padding-left: 12px;
+  font-size: 14px;
 }
 
+.messageButton {
+  border: none;
+  border-bottom-right-radius: 4px;
+  background-color: aliceblue;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;
+  transition: 0.4s;
+}
+
+.messageButton:hover {
+  background-color: rgb(218, 218, 218);
+}
+
+::-webkit-scrollbar {
+  width: 100px;
+}
 @media (max-width: 600px) {
   .chat {
     height: calc(100% - 3.125rem);

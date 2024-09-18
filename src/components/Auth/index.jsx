@@ -1,6 +1,9 @@
 import React from 'react';
 import styles from './styles.module.css';
 
+//Google Icon
+import GoogleIcon from '../../assets/google_icon.svg';
+
 //Firebase
 import { auth, provider} from '../../configs/firebase-config.js';
 import { signInWithPopup } from 'firebase/auth';
@@ -29,9 +32,12 @@ const Auth = (props) => {
   };
 
   return (
-    <div className={styles.auth}>
-      <p>Sign with Google to continue</p>
-      <button onClick={() => signInWithGoogle()}>Sign In With Google</button>
+    <div className={styles.container}>
+      <div className={styles.auth}>
+        <p className={styles.title}>Welcome!</p>
+        <p className={styles.contentText}>Sign with Google to continue</p>
+        <button className={styles.authBtn} onClick={() => signInWithGoogle()}><img src={GoogleIcon} alt="Google Icon" className={styles.googleIcon}/></button>
+      </div>
     </div>
   );
 }

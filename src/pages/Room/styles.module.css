@@ -1,14 +1,5 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background-color: #333;
-  color: #fff;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+body {
+  background-color: #2C74B3;
 }
 
 .main {
@@ -16,7 +7,7 @@
   flex-direction: row;
   margin-top: 76px;
   margin-left: 12px;
-  gap: 20px;
+  gap: 10px;
   height: 90vh;
 }
 

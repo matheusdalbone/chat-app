@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Chat from "../../components/Chat";
-import Screen from "../../components/Screen";
+import ScreenShareReceiver from "../../components/Screen";
 import styles from "./styles.module.css";
+import Header from "../../components/Header";
 
 const Room = () => {
   const[room, setRoom] = useState(null);
@@ -16,14 +17,9 @@ const Room = () => {
 
   return (
     <>
-      <div className={styles.header}>
-        <div>Room</div>
-        <div>{room}</div>
-        <button onClick={() => navigate("/")}>Leave</button>
-      </div>
-
+      <Header room={room} title={"Room"}/>
       <div className={styles.main}>
-        <Screen />
+        <ScreenShareReceiver />
         <div className={styles.chatSection}>
           <Chat room={room} />
         </div>
